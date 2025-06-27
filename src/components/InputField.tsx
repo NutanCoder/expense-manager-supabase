@@ -3,11 +3,12 @@ import React from "react";
 interface InputFieldProps {
   label?: string;
   type?: string;
-  name: string;
-  value: string;
+  name?: string;
+  value?: string;
   placeholder?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  error?: string;
 }
 
 function InputField(props: InputFieldProps) {
@@ -18,9 +19,10 @@ function InputField(props: InputFieldProps) {
   const onChange = props.onChange;
   const className = props.className;
   const label = props.label;
+  const error = props.error;
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 w-full">
       {label && (
         <label htmlFor={name} className="block mb-1 font-medium">
           {label}
@@ -32,8 +34,9 @@ function InputField(props: InputFieldProps) {
         value={value}
         placeholder={placeholder}
         onChange={onChange}
-        className={`border rounded px-3 py-2 outline-none ${className}`}
+        className={`border rounded px-3 py-2 outline-none w-full ${className}`}
       />
+      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
     </div>
   );
 }

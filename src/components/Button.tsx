@@ -22,7 +22,10 @@ function Button(props: ButtonProps) {
       onClick={onClick}
       disabled={disabled}
       className={clsx(
-        "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400",
+        "px-4 py-2",
+        "bg-gray-700 text-white",
+        "hover:bg-gray-900 disabled:bg-gray-400",
+        "rounded cursor-pointer select-none",
         className
       )}
     >

@@ -15,8 +15,9 @@ async function createCategory(
     .from(TABLE_NAME)
     .insert(payload)
     .select();
+
   if (error) {
-    return { data: null, error: error };
+    return { data: null, error: error.message };
   } else {
     const item = data[0];
     return { data: item, error: null };
@@ -25,16 +26,16 @@ async function createCategory(
 
 async function getAllCategory(page: number): Promise<CategoriesResponse> {
   const limit = 10;
-  const start = (page - 1) * limit + 1;
-  const end = page * limit;
+  const from = (page - 1) * limit;
+  const to = page * limit - 1;
 
   const { data, error } = await supabaseClient
     .from(TABLE_NAME)
     .select()
     .order("id", { ascending: false })
-    .range(start, end);
+    .range(from, to);
   if (error) {
-    return { data: [], error: error };
+    return { data: [], error: error.message };
   } else {
     return { data: data, error: null };
   }
@@ -46,7 +47,7 @@ async function getCategoryById(id: string): Promise<CategoryResponse> {
     .select()
     .eq("id", id);
   if (error) {
-    return { data: null, error: error };
+    return { data: null, error: error.message };
   }
   if (data.length == 0) {
     return { data: null, error: "No Entry found with id" + id };

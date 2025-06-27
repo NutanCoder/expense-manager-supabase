@@ -2,6 +2,9 @@ import type { ServiceResponse } from "./response";
 
 interface ICreateCategory {
   name: string;
+  image_url?: string;
+  color?: string;
+  description: string;
 }
 
 interface ICategory extends ICreateCategory {
