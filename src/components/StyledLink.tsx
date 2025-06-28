@@ -5,7 +5,7 @@ interface StyledLinkProps {
   to: string;
   children: React.ReactNode;
   className?: string;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "neutral";
 }
 
 function StyledLink(props: StyledLinkProps) {
@@ -18,10 +18,13 @@ function StyledLink(props: StyledLinkProps) {
     <Link
       to={to}
       className={clsx(
-        "px-4 py-2 rounded select-none transition-colors duration-200",
-        variant === "primary"
-          ? "bg-yellow-400 text-black hover:bg-yellow-500"
-          : "bg-gray-700 text-white hover:bg-gray-600",
+        "rounded select-none transition-colors duration-200",
+        variant === "primary" &&
+          "px-4 py-2 bg-yellow-400 text-black hover:bg-yellow-500",
+        variant === "secondary" &&
+          "px-4 py-2 bg-gray-700 text-white hover:bg-gray-600",
+        variant === "neutral" &&
+          "text-blue-600 hover:underline hover:text-blue-800",
         className
       )}
     >

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import CategoryCard from "./components/CategoryCard";
 import StyledLink from "../../components/StyledLink";
 import Modal from "../../components/Modal";
-import LoginForm from "../../features/LoginFeature";
+import LoginFeature from "../../features/LoginFeature";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import Button from "../../components/Button";
@@ -64,7 +64,7 @@ function CategoryListPage() {
         })}
       </div>
       <Modal title="Login Form" isOpen={isLoginOpen} onClose={closeLoginForm}>
-        <LoginForm onLoginSuccess={onLoginSuccess} />
+        <LoginFeature onLoginSuccess={onLoginSuccess} />
       </Modal>
     </div>
   );

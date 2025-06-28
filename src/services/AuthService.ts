@@ -1,4 +1,7 @@
-import type { User } from "@supabase/supabase-js";
+import type {
+  SignUpWithPasswordCredentials,
+  User,
+} from "@supabase/supabase-js";
 import type {
   AuthStateUpdateResponse,
   SignOutResponse,
@@ -13,6 +16,22 @@ async function sigin(email: string, password: string): Promise<UserResponse> {
   });
   if (error) {
     return { data: null, error: error };
+  } else {
+    return { data: data.user, error: null };
+  }
+}
+
+async function register(
+  email: string,
+  password: string
+): Promise<UserResponse> {
+  const credential: SignUpWithPasswordCredentials = {
+    email,
+    password,
+  };
+  const { data, error } = await supabaseClient.auth.signUp(credential);
+  if (error) {
+    return { data: null, error: error.message };
   } else {
     return { data: data.user, error: null };
   }
@@ -50,6 +69,7 @@ function onAuthStateUpdate(
 
 export const authService = {
   sigin,
+  register,
   getUser,
   sigout,
   onAuthStateUpdate,

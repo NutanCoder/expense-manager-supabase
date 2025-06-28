@@ -11,22 +11,19 @@ interface ILoginForm {
   onLoginSuccess?: (user: User) => void;
 }
 
-function LoginForm(props: ILoginForm) {
+function LoginFeature(props: ILoginForm) {
   const disptach = useDispatch();
   const navigate = useNavigate();
   const onLoginSuccess = props.onLoginSuccess;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-
     const { error, data } = await authService.sigin(email, password);
-
+    setLoading(false);
     if (error) {
       toast.error(error.message);
       return;
@@ -69,7 +66,6 @@ function LoginForm(props: ILoginForm) {
             required
           />
         </div>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </Button>
@@ -78,4 +74,4 @@ function LoginForm(props: ILoginForm) {
   );
 }
 
-export default LoginForm;
+export default LoginFeature;
