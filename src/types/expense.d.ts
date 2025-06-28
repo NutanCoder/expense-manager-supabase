@@ -3,8 +3,9 @@ import type { ServiceResponse } from "./response";
 interface ICreateExpense {
   amount: number;
   title: string;
-  description: string;
-  image_url: string;
+  description?: string;
+  image_url?: string;
+  category_id: string;
 }
 
 interface IExpense extends ICreateExpense {

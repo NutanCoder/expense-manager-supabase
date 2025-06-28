@@ -30,8 +30,8 @@ async function getAllByCategoryId(
   page: number
 ): Promise<ExpensesResponse> {
   const limit = 10;
-  const start = (page - 1) * limit + 1;
-  const end = page * limit;
+  const start = (page - 1) * limit;
+  const end = page * limit - 1;
   const { data, error } = await supabaseClient
     .from(TABLE_NAME)
     .select(
@@ -46,7 +46,7 @@ async function getAllByCategoryId(
     `
     )
     .order("created_at", { ascending: false })
-    .eq("cateogory_id", id)
+    .eq("category_id", id)
     .range(start, end);
   if (error) {
     return { error: error.message, data: [] };

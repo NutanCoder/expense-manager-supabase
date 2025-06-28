@@ -9,6 +9,7 @@ import type { IExpense } from "../../types/expense";
 import { expenseService } from "../../services/ExpenseService";
 import ExpenseCard from "./components/ExpenseCard";
 import Button from "../../components/Button";
+import StyledLink from "../../components/StyledLink";
 
 function ListExpenses() {
   const { id } = useParams();
@@ -53,6 +54,21 @@ function ListExpenses() {
     setPage(page + 1);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 200 &&
+        !loading
+      ) {
+        setPage(page + 1);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading]);
+
   if (loading) {
     return <MasterLoading />;
   }
@@ -60,7 +76,12 @@ function ListExpenses() {
   return (
     <div className="mx-auto container sm:my-4">
       {category && <CategoryCard data={category} />}
-
+      {/* Create expense button */}
+      <div className="my-4 flex justify-end">
+        <StyledLink to="/expenses/create" variant="secondary">
+          Create Expense
+        </StyledLink>
+      </div>
       {expenses.map((expense) => {
         return <ExpenseCard data={expense} key={expense.id} />;
       })}

@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { DollarSign, PieChart, ShieldCheck } from "lucide-react";
-import Button from "../components/Button";
 import StyledLink from "../components/StyledLink";
 
 function HomePage() {

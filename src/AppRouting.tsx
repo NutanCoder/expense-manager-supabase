@@ -11,6 +11,7 @@ import ProtectedRoute from "./features/ProtectedRoute";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import RegisterPage from "./pages/RegisterPage";
+import CreateExpense from "./pages/Expense/CreateExpense";
 
 function AppRouting() {
   const { i18n } = useTranslation();
@@ -36,6 +37,14 @@ function AppRouting() {
             }
           />
           <Route path="/categories/:id" element={<ListExpenses />} />
+          <Route
+            path="/expenses/create"
+            element={
+              <ProtectedRoute>
+                <CreateExpense />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<ErrorPage type="404" />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />

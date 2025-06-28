@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
-import type { ICategory } from "../../types/category";
 import { categoryService } from "../../services/CategoryService";
 import { toast } from "react-toastify";
 import CategoryCard from "./components/CategoryCard";
 import StyledLink from "../../components/StyledLink";
 import Modal from "../../components/Modal";
 import LoginFeature from "../../features/LoginFeature";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import Button from "../../components/Button";
 import type { User } from "@supabase/supabase-js";
 import { useNavigate } from "react-router-dom";
+import MasterLoading from "../../components/MasterLoading";
+import { categoryAction } from "../../redux/categorySlice";
 
 function CategoryListPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const authState = useSelector((root: RootState) => root.auth);
+  const categoryState = useSelector((root: RootState) => root.category);
+  const loading = categoryState.loading;
+  const categories = categoryState.categories;
   const isLoggedIn = authState.user != null;
-  const [categories, setCategories] = useState<ICategory[]>([]);
   const page = 1;
 
   const openLoginForm = () => {
@@ -32,17 +36,28 @@ function CategoryListPage() {
     navigate("/categories/create");
   };
 
+  const fetchAllCategories = async () => {
+    const action1 = categoryAction.setLoading(true);
+    dispatch(action1);
+    const { data, error } = await categoryService.getAllCategory(page);
+    const action2 = categoryAction.setLoading(false);
+    dispatch(action2);
+    if (data) {
+      const action = categoryAction.setCategory(data);
+      dispatch(action);
+    } else {
+      toast.error(error);
+    }
+  };
+
   useEffect(() => {
-    const fetchAllCategories = async () => {
-      const { data, error } = await categoryService.getAllCategory(page);
-      if (data) {
-        setCategories(data);
-      } else {
-        toast.error(error);
-      }
-    };
+    if (categoryState.isLoaded) return;
     fetchAllCategories();
   }, []);
+
+  if (loading) {
+    return <MasterLoading />;
+  }
 
   return (
     <div className="container mx-auto my-2">
