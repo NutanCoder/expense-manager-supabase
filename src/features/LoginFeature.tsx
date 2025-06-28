@@ -1,11 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import clsx from "clsx";
 import { authService } from "../services/AuthService";
+import { useDispatch } from "react-redux";
+import { authAction } from "../redux/authSlice";
+import Button from "../components/Button";
+import type { User } from "@supabase/supabase-js";
 
-function LoginForm() {
+interface ILoginForm {
+  onLoginSuccess?: (user: User) => void;
+}
+
+function LoginForm(props: ILoginForm) {
+  const disptach = useDispatch();
   const navigate = useNavigate();
+  const onLoginSuccess = props.onLoginSuccess;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,13 +25,21 @@ function LoginForm() {
     setLoading(true);
     setError("");
 
-    const { error } = await authService.sigin(email, password);
+    const { error, data } = await authService.sigin(email, password);
 
     if (error) {
       toast.error(error.message);
-    } else {
+      return;
+    }
+    if (data) {
+      const event = authAction.setUser(data);
+      disptach(event);
       toast.success("Login Success");
-      navigate("/profile");
+      if (onLoginSuccess) {
+        onLoginSuccess(data);
+      } else {
+        navigate("/profile");
+      }
     }
 
     setLoading(false);
@@ -30,7 +47,7 @@ function LoginForm() {
 
   return (
     <div className="max-w-md mx-auto p-6">
-      <h2 className="text-2xl font-bold">Login</h2>
+      {!onLoginSuccess && <h2 className="text-2xl font-bold">Login</h2>}
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
           <label className="block mb-1 font-medium">Email</label>
@@ -53,18 +70,9 @@ function LoginForm() {
           />
         </div>
         {error && <p className="text-red-500 text-sm">{error}</p>}
-        <button
-          type="submit"
-          className={clsx(
-            "w-full py-2 rounded text-white transition-colors",
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
-          )}
-          disabled={loading}
-        >
+        <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
-        </button>
+        </Button>
       </form>
     </div>
   );

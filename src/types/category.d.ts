@@ -1,3 +1,4 @@
+import type { IProfile } from "./profile";
 import type { ServiceResponse } from "./response";
 
 interface ICreateCategory {
@@ -9,6 +10,8 @@ interface ICreateCategory {
 
 interface ICategory extends ICreateCategory {
   id: string;
+  user_id: string;
+  profile?: IProfile;
   updated_at: string;
   created_at: string;
 }

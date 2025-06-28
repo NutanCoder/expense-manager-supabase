@@ -31,8 +31,18 @@ async function getAllCategory(page: number): Promise<CategoriesResponse> {
 
   const { data, error } = await supabaseClient
     .from(TABLE_NAME)
-    .select()
-    .order("id", { ascending: false })
+    .select(
+      `
+      *,
+      profile (
+        id,
+        full_name,
+        avatar_url,
+        email
+      )
+    `
+    )
+    .order("created_at", { ascending: false })
     .range(from, to);
   if (error) {
     return { data: [], error: error.message };
@@ -44,7 +54,17 @@ async function getAllCategory(page: number): Promise<CategoriesResponse> {
 async function getCategoryById(id: string): Promise<CategoryResponse> {
   const { data, error } = await supabaseClient
     .from(TABLE_NAME)
-    .select()
+    .select(
+      `
+        *,
+        profile (
+          id,
+          full_name,
+          avatar_url,
+          email
+        )
+      `
+    )
     .eq("id", id);
   if (error) {
     return { data: null, error: error.message };

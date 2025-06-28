@@ -1,21 +1,26 @@
-import { DollarSign, PieChart, ShieldCheck, UserCheck } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { DollarSign, PieChart, ShieldCheck } from "lucide-react";
+import Button from "../components/Button";
+import StyledLink from "../components/StyledLink";
 
 function HomePage() {
+  const { t } = useTranslation();
+
   const features = [
     {
       icon: <DollarSign className="w-8 h-8 text-yellow-300" />,
-      title: "Track Your Spending",
-      desc: "Visualize where your money goes and stay on budget.",
+      title: t("features.track.title"),
+      desc: t("features.track.description"),
     },
     {
       icon: <PieChart className="w-8 h-8 text-yellow-300" />,
-      title: "Smart Insights",
-      desc: "Receive detailed reports to manage your finances smarter.",
+      title: t("features.insights.title"),
+      desc: t("features.insights.description"),
     },
     {
       icon: <ShieldCheck className="w-8 h-8 text-yellow-300" />,
-      title: "Secure & Private",
-      desc: "Your data is protected with enterprise-grade security.",
+      title: t("features.security.title"),
+      desc: t("features.security.description"),
     },
   ];
 
@@ -24,20 +29,21 @@ function HomePage() {
       {/* Hero */}
       <section className="text-center py-20 px-4">
         <h1 className="text-4xl md:text-5xl font-bold text-yellow-300 mb-4">
-          Manage Your Expenses Effortlessly
+          {t("hero.headline")}
         </h1>
         <p className="max-w-xl mx-auto text-gray-300 text-lg mb-6">
-          Track, analyze, and optimize your finances — all in one place.
+          {t("hero.subtext")}
         </p>
-        <button className="bg-yellow-300 text-black font-semibold px-6 py-3 rounded hover:bg-yellow-400 transition">
-          Get Started
-        </button>
+
+        <StyledLink variant="primary" to="/register" className="py-3 px-6">
+          {t("hero.getStarted")}
+        </StyledLink>
       </section>
 
       {/* Features */}
       <section className="py-16 px-6 bg-gray-900">
         <h2 className="text-3xl font-semibold text-center text-yellow-300 mb-12">
-          Features
+          {t("navigation.features")}
         </h2>
         <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
           {features.map((f, i) => (
@@ -56,19 +62,19 @@ function HomePage() {
       {/* How it works */}
       <section className="py-16 px-6">
         <h2 className="text-3xl font-semibold text-center text-yellow-300 mb-12">
-          How It Works
+          {t("navigation.howItWorks")}
         </h2>
         <ol className="max-w-3xl mx-auto text-gray-200 space-y-6 list-decimal list-inside">
-          <li>Sign up and connect your accounts securely.</li>
-          <li>Start adding your daily expenses or let us auto-sync.</li>
-          <li>View your spending insights and plan better.</li>
+          <li>{t("howItWorks.step1")}</li>
+          <li>{t("howItWorks.step2")}</li>
+          <li>{t("howItWorks.step3")}</li>
         </ol>
       </section>
 
       {/* Testimonials */}
       <section className="py-16 px-6 bg-gray-900">
         <h2 className="text-3xl font-semibold text-center text-yellow-300 mb-12">
-          What Our Users Say
+          {t("navigation.testimonials")}
         </h2>
         <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
           <blockquote className="bg-gray-800 p-6 rounded shadow">
@@ -91,11 +97,11 @@ function HomePage() {
       {/* Call to Action */}
       <section className="text-center py-20 bg-gray-800">
         <h2 className="text-3xl font-bold text-yellow-300 mb-4">
-          Take Control of Your Money Today
+          {t("cta.heading", "Take Control of Your Money Today")}
         </h2>
-        <button className="mt-4 bg-yellow-300 text-black px-6 py-3 rounded hover:bg-yellow-400">
-          Create Free Account
-        </button>
+        <StyledLink variant="secondary" to="/register" className="py-3 px-6">
+          {t("cta.button", "Create Free Account")}
+        </StyledLink>
       </section>
     </div>
   );

@@ -2,16 +2,26 @@ import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { authService } from "../../services/AuthService";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
+import { authAction } from "../../redux/authSlice";
+import { toast } from "react-toastify";
 
 function Navbar() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const disptach = useDispatch();
+  const authState = useSelector((root: RootState) => root.auth);
+  const isLoggedIn = authState.user != null;
 
   const setActiveLang = (lang: string) => {
     i18n.changeLanguage(lang);
   };
 
-  const logoutHandler = () => {
-    authService.sigout();
+  const logoutHandler = async () => {
+    await authService.sigout();
+    toast.info("Logged out Successfully");
+    const event = authAction.setUser(null);
+    disptach(event);
   };
 
   return (
@@ -19,23 +29,35 @@ function Navbar() {
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex space-x-6">
           <Link to="/" className="hover:text-yellow-300 cursor-pointer">
-            Home
+            {t("home")}
           </Link>
           <Link
             to="/categories"
             className="hover:text-yellow-300 cursor-pointer"
           >
-            Categories
+            {t("categories")}
           </Link>
-          <Link to="/profile" className="hover:text-yellow-300 cursor-pointer">
-            Profile
-          </Link>
-          <button
-            className="hover:text-yellow-300 cursor-pointer"
-            onClick={logoutHandler}
-          >
-            Logout
-          </button>
+          {!isLoggedIn && (
+            <Link to="/login" className="hover:text-yellow-300 cursor-pointer">
+              {t("login", "Login")}
+            </Link>
+          )}
+          {isLoggedIn && (
+            <Link
+              to="/profile"
+              className="hover:text-yellow-300 cursor-pointer"
+            >
+              {t("profile")}
+            </Link>
+          )}
+          {isLoggedIn && (
+            <button
+              className="hover:text-yellow-300 cursor-pointer"
+              onClick={logoutHandler}
+            >
+              {t("logout")}
+            </button>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -49,7 +71,7 @@ function Navbar() {
                 : "bg-gray-700 hover:bg-gray-600"
             )}
           >
-            English
+            {t("english")}
           </button>
           <button
             onClick={() => setActiveLang("hi")}
@@ -61,7 +83,7 @@ function Navbar() {
                 : "bg-gray-700 hover:bg-gray-600"
             )}
           >
-            Hindi
+            {t("hindi")}
           </button>
         </div>
       </div>

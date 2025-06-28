@@ -1,3 +1,42 @@
 {
-  "submit": "Submit"
+  "home": "Home",
+  "categories": "Categories",
+  "profile": "Profile",
+  "logout": "Logout",
+  "english": "English",
+  "hindi": "Hindi",
+  "aboutUs": "About Us",
+  "contact": "Contact",
+  "careers": "Careers",
+  "company": "Company",
+  "copyright": "Expense Manager. All rights reserved.",
+  "hero": {
+    "headline": "Manage Your Expenses Effortlessly",
+    "subtext": "Track, analyze, and optimize your finances — all in one place.",
+    "getStarted": "Get Started"
+  },
+  "navigation": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "testimonials": "What Our Users Say"
+  },
+  "features": {
+    "track": {
+      "title": "Track Your Spending",
+      "description": "Visualize where your money goes and stay on budget."
+    },
+    "insights": {
+      "title": "Smart Insights",
+      "description": "Receive detailed reports to manage your finances smarter."
+    },
+    "security": {
+      "title": "Secure & Private",
+      "description": "Your data is protected with enterprise-grade security."
+    }
+  },
+  "howItWorks": {
+    "step1": "Sign up and connect your accounts securely.",
+    "step2": "Start adding your daily expenses or let us auto-sync.",
+    "step3": "View your spending insights and plan better."
+  }
 }

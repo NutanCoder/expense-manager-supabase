@@ -7,7 +7,6 @@ import { authService } from "../services/AuthService";
 function ProfilePage() {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const auth = supabaseClient.auth;
 
   useEffect(() => {
     onPageLoad();
@@ -33,7 +32,7 @@ function ProfilePage() {
   };
 
   const logout = () => {
-    auth.signOut();
+    authService.sigout();
   };
 
   if (!user) {

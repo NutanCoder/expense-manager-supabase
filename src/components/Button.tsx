@@ -2,6 +2,7 @@ import clsx from "clsx";
 import React from "react";
 
 interface ButtonProps {
+  variant?: "primary" | "secondary";
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
   children: React.ReactNode;
@@ -15,6 +16,7 @@ function Button(props: ButtonProps) {
   const children = props.children;
   const className = props.className;
   const disabled = props.disabled ?? false;
+  const variant = props.variant ?? "secondary";
 
   return (
     <button
@@ -23,9 +25,11 @@ function Button(props: ButtonProps) {
       disabled={disabled}
       className={clsx(
         "px-4 py-2",
-        "bg-gray-700 text-white",
-        "hover:bg-gray-900 disabled:bg-gray-400",
+        "rounded select-none transition-colors duration-200",
         "rounded cursor-pointer select-none",
+        variant === "primary"
+          ? "bg-yellow-400 text-black hover:bg-yellow-700"
+          : "bg-gray-700 text-white hover:bg-gray-900",
         className
       )}
     >
