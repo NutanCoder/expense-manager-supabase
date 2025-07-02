@@ -12,7 +12,7 @@ interface IExpenseSlice {
 
 const initialState: IExpenseSlice = {
   expenses: [],
-  isLastPage: true,
+  isLastPage: false,
   category: null,
   loading: true,
   page: 1,
@@ -22,8 +22,8 @@ const expenseListSlice = createSlice({
   name: "ExpenseSlice",
   initialState,
   reducers: {
-    setExpenses: (state, action) => {
-      state.expenses = action.payload;
+    appendEnpenses: (state, action) => {
+      state.expenses = [...state.expenses, ...action.payload];
       return state;
     },
     setIsLastPage: (state, action) => {

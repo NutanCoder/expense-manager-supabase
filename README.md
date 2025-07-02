@@ -1,5 +1,7 @@
 # Expense Manager App
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b8f25ae5-2f9b-447a-80d5-5b9bca5c7ebc/deploy-status)](https://app.netlify.com/projects/bokaro-book/deploys)
+
 Expense Manager is a modern web application built with React, TypeScript, and Vite. It helps you track your expenses, manage categories, and view your spending history with a clean and intuitive interface.
 
 ## Features

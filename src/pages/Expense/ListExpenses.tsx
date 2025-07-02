@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { categoryService } from "../../services/CategoryServices";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
@@ -21,8 +21,23 @@ function ListExpenses() {
   const page = expenseListState.page;
   const expenses = expenseListState.expenses;
   const isLastPage = expenseListState.isLastPage;
-  // const [loading, setLoading] = useState(false);
-  // const [page, setPage] = useState(1);
+
+  const fetchAllExpenses = useCallback(
+    async (id: string, page: number) => {
+      if (id == null) return;
+      const { data, error, isLastPage } =
+        await expenseService.getAllByCategoryId(id, page);
+      if (error) {
+        toast.error(error);
+      } else {
+        const action1 = expenseListAction.setIsLastPage(isLastPage);
+        dispatch(action1);
+        const action = expenseListAction.appendEnpenses(data);
+        dispatch(action);
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -43,25 +58,14 @@ function ListExpenses() {
   }, [dispatch, id]);
 
   useEffect(() => {
-    const fetchAllExpenses = async () => {
-      if (id == null) return;
-      const { data, error } = await expenseService.getAllByCategoryId(id, page);
-      if (error) {
-        toast.error(error);
-      } else {
-        if (data.length == 0) {
-          const action = expenseListAction.setIsLastPage(true);
-          dispatch(action);
-        }
-        const action = expenseListAction.setExpenses([...expenses, ...data]);
-        dispatch(action);
-      }
-    };
-    fetchAllExpenses();
-  }, [id, page, expenses, dispatch]);
+    if (id == null) return;
+    console.log(`useEffect of fetchAllExpenses ID:${id}, Page: ${page}`);
+    fetchAllExpenses(id, page);
+  }, [page, id, fetchAllExpenses]);
 
   const nextPage = () => {
-    // setPage(page + 1);
+    const action = expenseListAction.setPage(page + 1);
+    dispatch(action);
   };
 
   if (loading) {
@@ -80,12 +84,14 @@ function ListExpenses() {
       {expenses.map((expense) => {
         return <ExpenseCard data={expense} key={expense.id} />;
       })}
-      {!isLastPage && (
-        <Button type="button" onClick={nextPage}>
-          Load More
-        </Button>
-      )}
-      {isLastPage && <p>No More Page to Load</p>}
+      <div className="flex justify-center">
+        {!isLastPage && (
+          <Button type="button" onClick={nextPage}>
+            Load More
+          </Button>
+        )}
+        {isLastPage && <p>No More Page to Load</p>}
+      </div>
     </div>
   );
 }

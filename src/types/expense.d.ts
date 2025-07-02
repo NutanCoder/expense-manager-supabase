@@ -1,4 +1,4 @@
-import type { ServiceResponse } from "./response";
+import type { ServiceResponse, ServicePaginatedResponse } from "./response";
 
 interface ICreateEditExpense {
   amount: number;
@@ -19,5 +19,5 @@ interface IExpense extends ICreateEditExpense {
 }
 
 export type ExpenseResponse = ServiceResponse<IExpense | null>;
-export type ExpensesResponse = ServiceResponse<IExpense[]>;
+export type ExpensesResponse = ServicePaginatedResponse<IExpense[]>;
 export type ExpenseDeleteResponse = ServiceResponse<boolean | null>;

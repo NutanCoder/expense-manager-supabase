@@ -49,9 +49,9 @@ async function getAllByCategoryId(
     .eq("category_id", id)
     .range(start, end);
   if (error) {
-    return { error: error.message, data: [] };
+    return { error: error.message, data: [], isLastPage: false };
   } else {
-    return { error: null, data: data };
+    return { error: null, data: data, isLastPage: data.length < limit };
   }
 }
 
