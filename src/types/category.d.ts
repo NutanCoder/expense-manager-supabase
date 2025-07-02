@@ -8,6 +8,8 @@ interface ICreateEditCategory {
   description: string;
 }
 
+type ICreateCategory = ICreateEditCategory;
+
 interface ICategory extends ICreateEditCategory {
   id: string;
   user_id: string;

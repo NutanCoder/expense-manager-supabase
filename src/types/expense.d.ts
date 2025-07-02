@@ -8,6 +8,8 @@ interface ICreateEditExpense {
   category_id: string;
 }
 
+type ICreateExpense = ICreateEditExpense;
+
 interface IExpense extends ICreateEditExpense {
   id: string;
   user_id: string;

@@ -3,13 +3,14 @@ import type {
   CategoryDeleteResponse,
   CategoryResponse,
   ICreateCategory,
+  ICreateEditCategory,
 } from "../types/category";
 import { supabaseClient } from "../utils/supbase";
 
 const TABLE_NAME = "categories";
 
 async function createCategory(
-  payload: ICreateCategory
+  payload: ICreateEditCategory
 ): Promise<CategoryResponse> {
   const { data, error } = await supabaseClient
     .from(TABLE_NAME)
