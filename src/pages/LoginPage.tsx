@@ -3,9 +3,7 @@ import StyledLink from "../components/StyledLink";
 import LoginFeature from "../features/LoginFeature";
 
 function LoginPage() {
-  const randomBgUrl = `https://picsum.photos/1600/900?random=${Math.floor(
-    Math.random() * 1000
-  )}`;
+  const randomBgUrl = `https://picsum.photos/1600/900?random=${Math.floor(Math.random() * 1000)}`;
   return (
     <div
       className="h-screen bg-cover bg-center flex items-center"

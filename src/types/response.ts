@@ -1,4 +1,4 @@
-export interface ServiceResponse<T> {
-  error: any;
+export interface ServiceResponse<T, E> {
+  error: E;
   data: T;
 }

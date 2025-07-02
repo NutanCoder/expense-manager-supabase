@@ -22,8 +22,8 @@ function EditExpense() {
   });
 
   useEffect(() => {
-    dispatch(fetchCategories());
-  }, []);
+    dispatch(fetchCategories(1));
+  }, [dispatch]);
 
   useEffect(() => {
     if (id == null) return;

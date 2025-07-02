@@ -22,7 +22,7 @@ function CreateExpense() {
 
   useEffect(() => {
     dispatch(fetchCategories(1));
-  }, []);
+  }, [dispatch]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>

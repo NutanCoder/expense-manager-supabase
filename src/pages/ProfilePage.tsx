@@ -1,34 +1,9 @@
-import { useState, useEffect } from "react";
-import { type User } from "@supabase/supabase-js";
-import { useNavigate } from "react-router-dom";
 import { authService } from "../services/AuthService";
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
 
 function ProfilePage() {
-  const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    onPageLoad();
-    const { data } = authService.onAuthStateUpdate(onAuthChange);
-    return () => data.unsubscribe();
-  }, []);
-
-  const onAuthChange = (user: User | undefined) => {
-    if (user == undefined) {
-      navigate("/login");
-    } else {
-      setUser(user);
-    }
-  };
-
-  const onPageLoad = async () => {
-    const { data } = await authService.getUser();
-    if (data == null) {
-      navigate("/login");
-    } else {
-      setUser(data);
-    }
-  };
+  const { user } = useSelector((root: RootState) => root.auth);
 
   const logout = () => {
     authService.sigout();

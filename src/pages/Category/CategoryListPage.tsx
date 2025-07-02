@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { categoryService } from "../../services/CategoryService";
 import { toast } from "react-toastify";
 import CategoryCard from "./components/CategoryCard";
@@ -8,7 +8,6 @@ import LoginFeature from "../../features/LoginFeature";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import Button from "../../components/Button";
-import type { User } from "@supabase/supabase-js";
 import { useNavigate } from "react-router-dom";
 import MasterLoading from "../../components/MasterLoading";
 import { categoryAction } from "../../redux/categorySlice";
@@ -32,11 +31,11 @@ function CategoryListPage() {
     setIsLoginOpen(false);
   };
 
-  const onLoginSuccess = (_: User) => {
+  const onLoginSuccess = () => {
     navigate("/categories/create");
   };
 
-  const fetchAllCategories = async () => {
+  const fetchAllCategories = useCallback(async () => {
     const action1 = categoryAction.setLoading(true);
     dispatch(action1);
     const { data, error } = await categoryService.getAllCategory(page);
@@ -48,12 +47,12 @@ function CategoryListPage() {
     } else {
       toast.error(error);
     }
-  };
+  }, [page, dispatch]);
 
   useEffect(() => {
     if (categoryState.isLoaded) return;
     fetchAllCategories();
-  }, []);
+  }, [categoryState.isLoaded, fetchAllCategories]);
 
   if (loading) {
     return <MasterLoading />;

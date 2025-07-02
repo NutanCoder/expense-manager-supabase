@@ -8,9 +8,7 @@ interface ICategoryCard {
 function CategoryCard(props: ICategoryCard) {
   const { id, name, description, color, image_url, profile } = props.data;
 
-  const fallbackImage = `https://picsum.photos/seed/${encodeURIComponent(
-    id
-  )}/500/300`;
+  const fallbackImage = `https://picsum.photos/seed/${encodeURIComponent(id)}/500/300`;
   const avatar = profile?.avatar_url || "/default-avatar.png";
   const creator = profile?.full_name || "Unknown";
 

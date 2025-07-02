@@ -40,7 +40,7 @@ function ListExpenses() {
       }
     };
     fetchCategory();
-  }, []);
+  }, [dispatch, id]);
 
   useEffect(() => {
     const fetchAllExpenses = async () => {
@@ -58,7 +58,7 @@ function ListExpenses() {
       }
     };
     fetchAllExpenses();
-  }, [page]);
+  }, [id, page, expenses, dispatch]);
 
   const nextPage = () => {
     // setPage(page + 1);
