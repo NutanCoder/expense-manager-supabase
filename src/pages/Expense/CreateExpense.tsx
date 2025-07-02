@@ -1,20 +1,32 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
-import type { ICreateExpense } from "../../types/expense";
+import { useState, type ChangeEvent, type FormEvent, useEffect } from "react";
+import type { ICreateEditExpense } from "../../types/expense";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import { expenseService } from "../../services/ExpenseService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { type AppDispatch, type RootState } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "../../redux/categorySlice";
 
 function CreateExpense() {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const [payload, setPayload] = useState<ICreateExpense>({
+  const categoryState = useSelector((root: RootState) => root.category);
+  const categories = categoryState.categories;
+  const [payload, setPayload] = useState<ICreateEditExpense>({
     amount: 0,
     title: "",
-    category_id: "877ceb25-955b-4670-a02b-0c3e602ea786",
+    category_id: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    dispatch(fetchCategories(1));
+  }, []);
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     const updatedPayload = {
       ...payload,
@@ -65,7 +77,26 @@ function CreateExpense() {
               value={payload.description}
               onChange={handleChange}
             />
-
+            <div className="mb-4 w-full">
+              <label htmlFor="category_id" className="block mb-1 font-medium">
+                Category
+              </label>
+              <select
+                name="category_id"
+                id="category_id"
+                onChange={handleChange}
+                className="border rounded px-3 py-2 outline-none w-full"
+              >
+                <option value="">Select Category</option>
+                {categories.map((category) => {
+                  return (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
             {/* <InputField label="Image URL" /> */}
             <Button type="submit" className="w-full">
               Submit

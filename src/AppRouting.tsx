@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import RegisterPage from "./pages/RegisterPage";
 import CreateExpense from "./pages/Expense/CreateExpense";
+import EditCategory from "./pages/Category/EditCategory";
+import EditExpense from "./pages/Expense/EditExpense";
 
 function AppRouting() {
   const { i18n } = useTranslation();
@@ -37,6 +39,8 @@ function AppRouting() {
             }
           />
           <Route path="/categories/:id" element={<ListExpenses />} />
+          <Route path="/categories/:id/edit" element={<EditCategory />} />
+          <Route path="/expenses/:id/edit" element={<EditExpense />} />
           <Route
             path="/expenses/create"
             element={

@@ -1,32 +1,40 @@
-import { useEffect, useState } from "react";
-import type { ICategory } from "../../types/category";
+import { useEffect } from "react";
 import { categoryService } from "../../services/CategoryService";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import MasterLoading from "../../components/MasterLoading";
 import CategoryCard from "../Category/components/CategoryCard";
-import type { IExpense } from "../../types/expense";
 import { expenseService } from "../../services/ExpenseService";
 import ExpenseCard from "./components/ExpenseCard";
 import Button from "../../components/Button";
 import StyledLink from "../../components/StyledLink";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
+import { expenseListAction } from "../../redux/expenseSlice";
 
 function ListExpenses() {
   const { id } = useParams();
-  const [category, setCategory] = useState<ICategory | null>();
-  const [expenses, setExpenses] = useState<IExpense[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [isLastPage, setIsLastPage] = useState(false);
+  const dispatch = useDispatch();
+  const expenseListState = useSelector((root: RootState) => root.expenseList);
+  const category = expenseListState.category;
+  const loading = expenseListState.loading;
+  const page = expenseListState.page;
+  const expenses = expenseListState.expenses;
+  const isLastPage = expenseListState.isLastPage;
+  // const [loading, setLoading] = useState(false);
+  // const [page, setPage] = useState(1);
 
   useEffect(() => {
     const fetchCategory = async () => {
       if (id == undefined) return;
-      setLoading(true);
+      const action1 = expenseListAction.setLoading(true);
+      dispatch(action1);
       const { data, error } = await categoryService.getCategoryById(id);
-      setLoading(false);
+      const action2 = expenseListAction.setLoading(false);
+      dispatch(action2);
       if (data) {
-        setCategory(data);
+        const action = expenseListAction.setCategory(data);
+        dispatch(action);
       } else {
         toast.error(error);
       }
@@ -42,32 +50,19 @@ function ListExpenses() {
         toast.error(error);
       } else {
         if (data.length == 0) {
-          setIsLastPage(true);
+          const action = expenseListAction.setIsLastPage(true);
+          dispatch(action);
         }
-        setExpenses([...expenses, ...data]);
+        const action = expenseListAction.setExpenses([...expenses, ...data]);
+        dispatch(action);
       }
     };
     fetchAllExpenses();
   }, [page]);
 
   const nextPage = () => {
-    setPage(page + 1);
+    // setPage(page + 1);
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-          document.body.offsetHeight - 200 &&
-        !loading
-      ) {
-        setPage(page + 1);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading]);
 
   if (loading) {
     return <MasterLoading />;

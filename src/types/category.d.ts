@@ -1,14 +1,14 @@
 import type { IProfile } from "./profile";
 import type { ServiceResponse } from "./response";
 
-interface ICreateCategory {
+interface ICreateEditCategory {
   name: string;
   image_url?: string;
   color?: string;
   description: string;
 }
 
-interface ICategory extends ICreateCategory {
+interface ICategory extends ICreateEditCategory {
   id: string;
   user_id: string;
   profile?: IProfile;

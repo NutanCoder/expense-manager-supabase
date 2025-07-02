@@ -1,3 +1,5 @@
+import { Edit } from "lucide-react";
+import StyledLink from "../../../components/StyledLink";
 import type { IExpense } from "../../../types/expense";
 
 interface IExpenseCard {
@@ -37,9 +39,19 @@ function ExpenseCard(props: IExpenseCard) {
               {profile?.full_name || "Unknown"}
             </span>
           </div>
-          <span className="text-gray-900 font-medium text-2xl">
-            ₹{amount.toFixed(2)}
-          </span>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-end gap-2">
+        <StyledLink
+          variant="secondary"
+          className="w-fit"
+          to={`/expenses/${id}/edit`}
+        >
+          <Edit />
+        </StyledLink>
+        <div className="text-gray-900 font-medium text-2xl">
+          ₹{amount.toFixed(2)}
         </div>
       </div>
     </div>

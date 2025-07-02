@@ -1,6 +1,6 @@
 import type { ServiceResponse } from "./response";
 
-interface ICreateExpense {
+interface ICreateEditExpense {
   amount: number;
   title: string;
   description?: string;
@@ -8,7 +8,7 @@ interface ICreateExpense {
   category_id: string;
 }
 
-interface IExpense extends ICreateExpense {
+interface IExpense extends ICreateEditExpense {
   id: string;
   user_id: string;
   profile?: IProfile;

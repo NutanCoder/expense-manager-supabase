@@ -1,4 +1,3 @@
-import Button from "../../../components/Button";
 import StyledLink from "../../../components/StyledLink";
 import type { ICategory } from "../../../types/category";
 
@@ -41,7 +40,7 @@ function CategoryCard(props: ICategoryCard) {
         </div>
       </div>
 
-      <div className="p-4 flex items-center justify-between">
+      <div className="p-4 flex items-center justify-between gap-2">
         <div className="w-full">
           <h3
             className="text-xl font-semibold mb-2"
@@ -62,6 +61,9 @@ function CategoryCard(props: ICategoryCard) {
         </div>
         <StyledLink className="shrink-0" to={`/categories/${id}`}>
           See Expense
+        </StyledLink>
+        <StyledLink className="shrink-0" to={`/categories/${id}/edit`}>
+          Edit Category
         </StyledLink>
       </div>
     </div>

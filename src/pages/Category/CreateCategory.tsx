@@ -1,11 +1,6 @@
-import {
-  useState,
-  type FormEventHandler,
-  type FormEvent,
-  type ChangeEvent,
-} from "react";
+import { useState, type FormEvent, type ChangeEvent } from "react";
 import InputField from "../../components/InputField";
-import type { ICreateCategory } from "../../types/category";
+import type { ICreateEditCategory } from "../../types/category";
 import Button from "../../components/Button";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorUnExpected } from "../../components/errors";
@@ -15,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function CreateCategory() {
   const navigation = useNavigate();
-  const [payload, setPayload] = useState<ICreateCategory>({
+  const [payload, setPayload] = useState<ICreateEditCategory>({
     name: "",
     description: "",
   });
