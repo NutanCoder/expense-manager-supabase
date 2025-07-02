@@ -4,7 +4,7 @@ import type { ICreateEditCategory } from "../../types/category";
 import Button from "../../components/Button";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorUnExpected } from "../../components/errors";
-import { categoryService } from "../../services/CategoryService";
+import { categoryService } from "../../services/CategoryServices";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 

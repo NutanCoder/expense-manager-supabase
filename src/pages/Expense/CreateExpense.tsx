@@ -2,7 +2,7 @@ import { useState, type ChangeEvent, type FormEvent, useEffect } from "react";
 import type { ICreateEditExpense } from "../../types/expense";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
-import { expenseService } from "../../services/ExpenseService";
+import { expenseService } from "../../services/ExpenseServices";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { type AppDispatch, type RootState } from "../../redux/store";

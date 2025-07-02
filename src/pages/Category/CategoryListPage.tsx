@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { categoryService } from "../../services/CategoryService";
+import { categoryService } from "../../services/CategoryServices";
 import { toast } from "react-toastify";
 import CategoryCard from "./components/CategoryCard";
 import StyledLink from "../../components/StyledLink";

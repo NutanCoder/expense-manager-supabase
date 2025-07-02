@@ -4,7 +4,7 @@ import InputField from "../../components/InputField";
 import type { ICreateEditExpense } from "../../types/expense";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../redux/store";
-import { expenseService } from "../../services/ExpenseService";
+import { expenseService } from "../../services/ExpenseServices";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fetchCategories } from "../../redux/categorySlice";

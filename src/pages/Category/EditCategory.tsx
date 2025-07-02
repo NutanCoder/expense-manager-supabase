@@ -4,7 +4,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { ErrorUnExpected } from "../../components/errors";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
-import { categoryService } from "../../services/CategoryService";
+import { categoryService } from "../../services/CategoryServices";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 

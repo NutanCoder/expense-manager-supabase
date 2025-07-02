@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { categoryService } from "../../services/CategoryService";
+import { categoryService } from "../../services/CategoryServices";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import MasterLoading from "../../components/MasterLoading";
@@ -10,7 +10,7 @@ import StyledLink from "../../components/StyledLink";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import { expenseListAction } from "../../redux/expenseSlice";
-import { expenseService } from "../../services/ExpenseService";
+import { expenseService } from "../../services/ExpenseServices";
 
 function ListExpenses() {
   const { id } = useParams();
