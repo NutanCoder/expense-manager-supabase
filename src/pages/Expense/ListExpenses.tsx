@@ -4,13 +4,13 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import MasterLoading from "../../components/MasterLoading";
 import CategoryCard from "../Category/components/CategoryCard";
-import { expenseService } from "../../services/ExpenseService";
 import ExpenseCard from "./components/ExpenseCard";
 import Button from "../../components/Button";
 import StyledLink from "../../components/StyledLink";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import { expenseListAction } from "../../redux/expenseSlice";
+import { expenseService } from "../../services/ExpenseService";
 
 function ListExpenses() {
   const { id } = useParams();
