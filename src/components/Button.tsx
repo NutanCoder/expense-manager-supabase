@@ -26,7 +26,7 @@ function Button(props: ButtonProps) {
       className={clsx(
         "px-4 py-2",
         "rounded select-none transition-colors duration-200",
-        "rounded cursor-pointer select-none",
+        "rounded cursor-pointer select-none uppercase",
         variant === "primary"
           ? "bg-yellow-400 text-black hover:bg-yellow-700"
           : "bg-gray-700 text-white hover:bg-gray-900",

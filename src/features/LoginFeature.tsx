@@ -12,7 +12,7 @@ interface ILoginForm {
 }
 
 function LoginFeature(props: ILoginForm) {
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLoginSuccess = props.onLoginSuccess;
   const [email, setEmail] = useState("");
@@ -22,7 +22,7 @@ function LoginFeature(props: ILoginForm) {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error, data } = await authService.sigin(email, password);
+    const { error, data } = await authService.signin(email, password);
     setLoading(false);
     if (error) {
       toast.error(error.message);
@@ -30,7 +30,7 @@ function LoginFeature(props: ILoginForm) {
     }
     if (data) {
       const event = authAction.setUser(data);
-      disptach(event);
+      dispatch(event);
       toast.success("Login Success");
       if (onLoginSuccess) {
         onLoginSuccess(data);
@@ -38,8 +38,6 @@ function LoginFeature(props: ILoginForm) {
         navigate("/profile");
       }
     }
-
-    setLoading(false);
   };
 
   return (
@@ -51,6 +49,7 @@ function LoginFeature(props: ILoginForm) {
           <input
             type="email"
             className="w-full px-3 py-2 border rounded"
+            placeholder="Enter Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -60,6 +59,7 @@ function LoginFeature(props: ILoginForm) {
           <label className="block mb-1 font-medium">Password</label>
           <input
             type="password"
+            placeholder="Enter Password"
             className="w-full px-3 py-2 border rounded"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

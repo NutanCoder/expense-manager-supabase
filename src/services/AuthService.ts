@@ -9,7 +9,7 @@ import type {
 } from "../types/auth";
 import { supabaseClient } from "../utils/supbase";
 
-async function sigin(email: string, password: string): Promise<UserResponse> {
+async function signin(email: string, password: string): Promise<UserResponse> {
   const { error, data } = await supabaseClient.auth.signInWithPassword({
     email,
     password,
@@ -68,7 +68,7 @@ function onAuthStateUpdate(
 }
 
 export const authService = {
-  sigin,
+  signin,
   register,
   getUser,
   sigout,
