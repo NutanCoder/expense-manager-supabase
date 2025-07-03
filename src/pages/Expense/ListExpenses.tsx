@@ -59,7 +59,6 @@ function ListExpenses() {
 
   useEffect(() => {
     if (id == null) return;
-    console.log(`useEffect of fetchAllExpenses ID:${id}, Page: ${page}`);
     fetchAllExpenses(id, page);
   }, [page, id, fetchAllExpenses]);
 

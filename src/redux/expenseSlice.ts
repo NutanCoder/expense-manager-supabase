@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IExpense } from "../types/expense";
 import type { ICategory } from "../types/category";
 
@@ -22,8 +22,10 @@ const expenseListSlice = createSlice({
   name: "ExpenseSlice",
   initialState,
   reducers: {
-    appendEnpenses: (state, action) => {
-      state.expenses = [...state.expenses, ...action.payload];
+    appendEnpenses: (state, action: PayloadAction<IExpense[]>) => {
+      const old = Array.from(state.expenses);
+      const newd = action.payload;
+      state.expenses = [...old, ...newd];
       return state;
     },
     setIsLastPage: (state, action) => {

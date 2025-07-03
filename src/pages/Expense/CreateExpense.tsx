@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { type AppDispatch, type RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../redux/categorySlice";
+import { supabaseClient } from "../../utils/supbase";
 
 function CreateExpense() {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,6 +20,7 @@ function CreateExpense() {
     title: "",
     category_id: "",
   });
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     dispatch(fetchCategories(1));
@@ -37,7 +39,12 @@ function CreateExpense() {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { data, error } = await expenseService.createExpense(payload);
+    const image_url = await uploadImage();
+    if (!image_url) return;
+    const { data, error } = await expenseService.createExpense({
+      ...payload,
+      image_url: image_url,
+    });
     if (data) {
       toast.success("Created");
       navigate(`/categories/${data.category_id}`);
@@ -45,6 +52,27 @@ function CreateExpense() {
       toast.error(error);
     }
   };
+
+  const uploadImage = async (): Promise<string | undefined> => {
+    if (file == null) return undefined;
+
+    const filePath = `${file.name}`;
+
+    const { error } = await supabaseClient.storage
+      .from("invoices")
+      .upload(filePath, file);
+
+    console.log({ error });
+    if (error) return undefined;
+
+    const { data } = supabaseClient.storage
+      .from("invoices")
+      .getPublicUrl(filePath);
+    console.log({ data });
+
+    return data.publicUrl;
+  };
+
   return (
     <div className="container mx-auto my-4">
       <div className="flex">
@@ -97,6 +125,20 @@ function CreateExpense() {
                 })}
               </select>
             </div>
+
+            <div className="mb-4 w-full">
+              <label htmlFor="image_url" className="block mb-1 font-medium">
+                Image
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                name="image_url"
+                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                className="border rounded px-3 py-2 outline-none w-full"
+              />
+            </div>
+
             {/* <InputField label="Image URL" /> */}
             <Button type="submit" className="w-full">
               Submit
