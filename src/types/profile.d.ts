@@ -12,4 +12,5 @@ interface IProfile extends ICreateProfile {
   updated_at: string;
 }
 
+export type IProfileImageResponse = ServiceResponse<string | null>;
 export type ProfileResponse = ServiceResponse<IProfile | null>;

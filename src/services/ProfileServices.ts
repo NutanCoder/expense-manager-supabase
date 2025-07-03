@@ -1,7 +1,12 @@
-import type { ICreateProfile, ProfileResponse } from "../types/profile";
+import type {
+  ICreateProfile,
+  IProfileImageResponse,
+  ProfileResponse,
+} from "../types/profile";
 import { supabaseClient } from "../utils/supbase";
+import { v4 } from "uuid";
 
-const TABLE_NAME = "profiles";
+const TABLE_NAME = "profile";
 
 async function getProfileById(id: string): Promise<ProfileResponse> {
   const { data, error } = await supabaseClient
@@ -37,7 +42,28 @@ async function updateProfileById(
   }
 }
 
+const uploadAvatar = async (file: File): Promise<IProfileImageResponse> => {
+  const randomUUID = v4();
+  const filenames = file.name.split(".");
+  const fielExtension = filenames[filenames.length - 1];
+  const filePath = `${randomUUID}.${fielExtension}`;
+
+  const { error } = await supabaseClient.storage
+    .from("profile")
+    .upload(filePath, file);
+
+  if (error) {
+    return { data: null, error: error.message };
+  }
+
+  const { data } = supabaseClient.storage
+    .from("profile")
+    .getPublicUrl(filePath);
+  return { data: data.publicUrl, error: null };
+};
+
 export const profileService = {
   getProfileById,
   updateProfileById,
+  uploadAvatar,
 };
