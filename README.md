@@ -4,6 +4,9 @@
 
 Expense Manager is a modern web application built with React, TypeScript, and Vite. It helps you track your expenses, manage categories, and view your spending history with a clean and intuitive interface.
 
+![Home Page](./screenshots/home.png)
+![Login Page](./screenshots/login.png)
+
 ## Features
 
 - User authentication (login/register)

@@ -3,7 +3,7 @@ import type { ICategory } from "../../../types/category";
 
 interface ICategoryCard {
   data: ICategory;
-  showExpenseButton: boolean;
+  showExpenseButton?: boolean;
 }
 
 function CategoryCard(props: ICategoryCard) {
