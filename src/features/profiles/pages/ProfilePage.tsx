@@ -19,6 +19,7 @@ function ProfilePage() {
   const navigate = useNavigate();
   const { user } = useSelector((root: RootState) => root.auth);
   const [loading, setLoading] = useState(false);
+  const [updating, setUpdating] = useState(false);
   const [payload, setPayload] = useState<ICreateProfile>({
     email: "",
     full_name: "",
@@ -56,11 +57,13 @@ function ProfilePage() {
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let avatar_url = payload.avatar_url;
+    setUpdating(true);
     if (file != null) {
       const { data, error } = await profileService.uploadAvatar(file);
       if (data != null) {
         avatar_url = data;
       } else {
+        setUpdating(false);
         toast.error(error);
         return;
       }
@@ -74,6 +77,7 @@ function ProfilePage() {
       id,
       updatedPayload
     );
+    setUpdating(false);
     if (data) {
       toast.success("Profile Edited Successfully");
       setFile(null);
@@ -138,8 +142,8 @@ function ProfilePage() {
               className="border rounded px-3 py-2 outline-none w-full"
             />
           </div>
-          <Button type="submit" className="w-full">
-            Update Profile
+          <Button type="submit" className="w-full" disabled={updating}>
+            {updating ? "Updating" : "Update Profile"}
           </Button>
         </form>
       </div>
