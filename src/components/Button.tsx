@@ -28,8 +28,9 @@ function Button(props: ButtonProps) {
         "rounded select-none transition-colors duration-200",
         "rounded cursor-pointer select-none uppercase",
         variant === "primary"
-          ? "bg-yellow-400 text-black hover:bg-yellow-700"
-          : "bg-gray-700 text-white hover:bg-gray-900",
+          ? "bg-yellow-600 text-black hover:bg-yellow-700 disabled:bg-yellow-400"
+          : "bg-gray-800 text-white hover:bg-gray-900  disabled:bg-gray-400",
+        disabled ? "hover:cursor-not-allowed" : "",
         className
       )}
     >

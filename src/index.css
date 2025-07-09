@@ -10,3 +10,7 @@ html {
     max-width: 80% !important;
   }
 }
+
+.form-container {
+  @apply border-2 border-gray-400 rounded-xl p-6 space-y-4 max-w-md mx-auto;
+}

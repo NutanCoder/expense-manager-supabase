@@ -1,12 +1,13 @@
 import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
-import AppRouting from "./AppRouting";
-import { ErrorUnExpected } from "./components/errors";
+import { ErrorUnExpected } from "@/components/errors";
 import { useCallback, useEffect } from "react";
-import { authService } from "./services/AuthService";
+import { authService } from "@/features/auth/services/AuthService";
 import type { User } from "@supabase/supabase-js";
-import { authAction } from "./redux/authSlice";
+import { authAction } from "@/redux/authSlice";
+import { RouterProvider } from "react-router-dom";
+import { router } from "@/router/router";
 
 function App() {
   const disptach = useDispatch();
@@ -33,7 +34,7 @@ function App() {
 
   return (
     <ErrorBoundary fallback={<ErrorUnExpected />}>
-      <AppRouting />
+      <RouterProvider router={router} />
       <ToastContainer />
     </ErrorBoundary>
   );
