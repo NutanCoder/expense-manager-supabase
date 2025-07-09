@@ -7,8 +7,12 @@ import { ErrorUnExpected } from "../../../components/errors";
 import { categoryService } from "@/features/category/services/CategoryServices";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/redux/store";
+import { fetchCategories } from "@/redux/categorySlice";
 
 function CreateCategory() {
+  const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigate();
   const [payload, setPayload] = useState<ICreateEditCategory>({
     name: "",
@@ -25,6 +29,7 @@ function CreateCategory() {
     if (error) {
       toast.error(error);
     } else {
+      dispatch(fetchCategories(1));
       toast.success("Created Successfully");
       navigation(`/categories/${data?.id}`);
     }
